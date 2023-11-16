@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Просмотр Баланса</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+
+
+</head>
+<body>
+    <div class="container">
+        <h1>Балансы криптовалют</h1>
+        <p id="btc_balance">Баланс BTC: {{ btc_balance }}</p>
+        <p id="eth_balance">Баланс ETH: {{ eth_balance }}</p>
+        <p id="usdt_balance">Баланс USDT: {{ usdt_balance }}</p>
+        
+        <button id="update-balance">Обновить баланс</button>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+    $(document).ready(function() {
+    $('#update-balance').click(function() {
+        $.ajax({
+            url: '/update_balance',
+            type: 'GET',
+            success: function(data) {
+                // Обновление значений на странице
+                $('p#btc_balance').text('Баланс BTC: ' + data.btc_balance);
+                $('p#eth_balance').text('Баланс ETH: ' + data.eth_balance);
+                $('p#usdt_balance').text('Баланс USDT: ' + data.usdt_balance);
+            }
+        });
+    });
+});
+</script>    
+</body>
+</html>
